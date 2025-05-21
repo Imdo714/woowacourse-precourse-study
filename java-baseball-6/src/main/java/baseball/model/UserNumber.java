@@ -1,11 +1,14 @@
 package baseball.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserNumber {
 
     private List<Integer> userNumber;
+
+    public List<Integer> getUserNumber() {
+        return userNumber;
+    }
 
     public void initialize(String userNumber){
         validate(userNumber);
@@ -66,15 +69,21 @@ public class UserNumber {
     }
 
     private List<Integer> typeUpdate(String userNumber) {
-        List<Integer> result = new ArrayList<>();
 
-        for (int i = 0; i < userNumber.length(); i++) {
-            char c = userNumber.charAt(i);
-            int number = c - '0';
-            result.add(number);
-        }
+        return userNumber.chars()
+                .map(c -> c - '0')
+                .boxed() // 기본형을 객체로 감싸줄떄 사용 (int -> Integer)
+                .toList();
 
-        return result;
+//        List<Integer> result = new ArrayList<>();
+//
+//        for (int i = 0; i < userNumber.length(); i++) {
+//            char c = userNumber.charAt(i);
+//            int number = c - '0';
+//            result.add(number);
+//        }
+//
+//        return result;
     }
 
 

@@ -10,6 +10,7 @@ public class RandomNumber {
 
     public void generateComputerNumbers(ComputerNumber computerNumber){
         List<Integer> numbers = generateRndomNumber(); // 컴퓨터 번호 생성
+        System.out.println("정답 : " + numbers);
         computerNumber.initialize(numbers); // 랜덤 번호 저장
     }
 

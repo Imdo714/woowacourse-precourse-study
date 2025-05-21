@@ -1,6 +1,7 @@
 package baseball.controller;
 
 import baseball.model.ComputerNumber;
+import baseball.model.GameState;
 import baseball.model.UserNumber;
 import baseball.utlis.RandomNumber;
 import baseball.view.InputView;
@@ -13,6 +14,7 @@ public class GameController {
     private final RandomNumber randomNumber;
     ComputerNumber computerNumber = new ComputerNumber(); // GameController 필요할때 생성 하게 만듬
     UserNumber userNumber = new UserNumber();
+    GameState gameState = new GameState();
 
     public GameController(InputView inputView, OutputView outputView, RandomNumber randomNumber) {
         this.inputView = inputView;
@@ -22,10 +24,22 @@ public class GameController {
 
     public void gameStart(){
         saveComputerNumber(); // 게임 시작을 알리고 컴퓨터가 숫자 3개를 computerNumber에 저장한다.
-        saveUserNumber(); // 사용자 입력을 받아 userNumber에 저장
+//        saveUserNumber(); // 사용자 입력을 받아 userNumber에 저장
 
-        // 컴퓨터 번호랑 사용자 번호를 비교해야 함
+        playGame(); // 컴퓨터 번호랑 사용자 번호를 비교
+    }
 
+    private void playGame() {
+        while (true){
+            saveUserNumber();  // 사용자 입력을 받아 userNumber에 저장
+
+            GameState state = gameState.playGame(computerNumber, userNumber);
+            state.print();
+
+            if(state.isThreeStrikes()){
+                break;
+            }
+        }
     }
 
     private void saveComputerNumber() {
