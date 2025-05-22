@@ -15,8 +15,8 @@ public class GameState {
         this.ball = ball;
     }
 
-    public boolean isThreeStrikes() {
-        return strike == 3;
+    public boolean isNotThreeStrikes() {
+        return strike != 3;
     }
 
     public void print() {

@@ -4,4 +4,8 @@ public interface OutputView {
     void startMessage();
 
     void writeUserNumberMessage();
+
+    void endGameMessage();
+
+    void reStartMessage();
 }

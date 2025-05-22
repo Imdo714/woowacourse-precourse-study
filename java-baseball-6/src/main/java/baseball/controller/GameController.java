@@ -1,9 +1,6 @@
 package baseball.controller;
 
-import baseball.model.ComputerNumber;
-import baseball.model.GameState;
-import baseball.model.UserNumber;
-import baseball.utlis.RandomNumber;
+import baseball.service.GameService;
 import baseball.view.InputView;
 import baseball.view.OutputView;
 
@@ -11,46 +8,50 @@ public class GameController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final RandomNumber randomNumber;
-    ComputerNumber computerNumber = new ComputerNumber(); // GameController 필요할때 생성 하게 만듬
-    UserNumber userNumber = new UserNumber();
-    GameState gameState = new GameState();
+    private final GameService gameService;
 
-    public GameController(InputView inputView, OutputView outputView, RandomNumber randomNumber) {
+
+    public GameController(InputView inputView, OutputView outputView, GameService gameService) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.randomNumber = randomNumber;
+        this.gameService = gameService;
     }
 
     public void gameStart(){
-        saveComputerNumber(); // 게임 시작을 알리고 컴퓨터가 숫자 3개를 computerNumber에 저장한다.
-//        saveUserNumber(); // 사용자 입력을 받아 userNumber에 저장
+        boolean reStartGame = true;
 
-        playGame(); // 컴퓨터 번호랑 사용자 번호를 비교
+        while (reStartGame){
+            saveComputerNumber(); // 게임 시작을 알리고 컴퓨터가 숫자 3개를 computerNumber에 저장한다.
+
+            playGame(); // 컴퓨터 번호랑 사용자 번호를 비교
+            reStartGame = reStartGame();
+        }
     }
 
     private void playGame() {
-        while (true){
+        boolean compare = true;
+
+        while (compare){
             saveUserNumber();  // 사용자 입력을 받아 userNumber에 저장
-
-            GameState state = gameState.playGame(computerNumber, userNumber);
-            state.print();
-
-            if(state.isThreeStrikes()){
-                break;
-            }
+            compare = gameService.compareNumber(); // 숫자 비교 해서 삼진인지 확인
         }
+    }
+
+    private boolean reStartGame() {
+        outputView.reStartMessage(); // 게임 새로 시작할건지 묻는 메세지
+        String reNumber = inputView.getWriteUserNumber();// 1이면 재시작 2면 종료
+
+        return gameService.reNUmberCheck(reNumber);
     }
 
     private void saveComputerNumber() {
         outputView.startMessage();
-        randomNumber.generateComputerNumbers(computerNumber);
+        gameService.saveComputerNumber(); // 게임 시작을 알리고 컴퓨터가 숫자 3개를 computerNumber에 저장한다.
     }
 
     private void saveUserNumber() {
         outputView.writeUserNumberMessage();
-        String writeUserNumber = inputView.getWriteUserNumber();
-        userNumber.initialize(writeUserNumber);
+        gameService.saveUserNumber(inputView.getWriteUserNumber());
     }
 
 }
