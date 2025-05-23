@@ -2,6 +2,9 @@ package baseball.model;
 
 public class ReStartNumber {
 
+    private static final String RESTART = "1";
+    private static final String QUIT = "2";
+
     private int reStartNumber;
 
     public void initialize(String reNumber) {
@@ -16,7 +19,7 @@ public class ReStartNumber {
     }
 
     public static boolean isNotOneAndTwo(String resNumber) {
-        return !"1".equals(resNumber) && !"2".equals(resNumber);
+        return !RESTART.equals(resNumber) && !QUIT.equals(resNumber);
     }
 
     public boolean isReStarts() {

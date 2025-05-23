@@ -5,16 +5,21 @@ import baseball.model.GameState;
 import baseball.model.ReStartNumber;
 import baseball.model.UserNumber;
 import baseball.utlis.RandomNumber;
+import baseball.view.OutputView;
 
 public class GameService {
     private final RandomNumber randomNumber;
-    GameState gameState = new GameState();
-    UserNumber userNumber = new UserNumber();
-    ReStartNumber reStartNumber = new ReStartNumber();
-    ComputerNumber computerNumber = new ComputerNumber();
+    private final GameState gameState;
+    private final UserNumber userNumber;
+    private final ReStartNumber reStartNumber;
+    private final ComputerNumber computerNumber;
 
-    public GameService(RandomNumber randomNumber) {
+    public GameService(RandomNumber randomNumber, GameState gameState, UserNumber userNumber, ReStartNumber reStartNumber, ComputerNumber computerNumber) {
         this.randomNumber = randomNumber;
+        this.gameState = gameState;
+        this.userNumber = userNumber;
+        this.reStartNumber = reStartNumber;
+        this.computerNumber = computerNumber;
     }
 
     public void saveComputerNumber() {
@@ -25,9 +30,9 @@ public class GameService {
         userNumber.initialize(writeUserNumber);
     }
 
-    public boolean compareNumber(){
+    public boolean compareNumber(OutputView outputView){
         GameState state = gameState.playGame(computerNumber, userNumber);
-        state.print();
+        state.print(outputView);
         return state.isNotThreeStrikes();
     }
 

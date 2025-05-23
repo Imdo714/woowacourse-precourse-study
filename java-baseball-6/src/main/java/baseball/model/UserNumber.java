@@ -53,19 +53,6 @@ public class UserNumber {
         // distinct : 증복 제거
         // count : 수량세기
         return userNumber.chars().distinct().count() != userNumber.length();
-
-        // 내가 생각한 방식
-//        boolean[] seen = new boolean[10];
-//
-//        for (char c : userNumber.toCharArray()) {
-//            int num = c - '0';
-//            if (seen[num]) {
-//                return true;
-//            }
-//            seen[num] = true;
-//        }
-//
-//        return false;
     }
 
     private List<Integer> typeUpdate(String userNumber) {
@@ -74,16 +61,6 @@ public class UserNumber {
                 .map(c -> c - '0')
                 .boxed() // 기본형을 객체로 감싸줄떄 사용 (int -> Integer)
                 .toList();
-
-//        List<Integer> result = new ArrayList<>();
-//
-//        for (int i = 0; i < userNumber.length(); i++) {
-//            char c = userNumber.charAt(i);
-//            int number = c - '0';
-//            result.add(number);
-//        }
-//
-//        return result;
     }
 
 

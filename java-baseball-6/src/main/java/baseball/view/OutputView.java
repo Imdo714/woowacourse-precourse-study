@@ -8,4 +8,8 @@ public interface OutputView {
     void endGameMessage();
 
     void reStartMessage();
+
+    void printNothing();
+
+    void printVerdict(int ball, int strike);
 }

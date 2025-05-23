@@ -1,5 +1,7 @@
 package baseball.model;
 
+import baseball.view.OutputView;
+
 public class GameState {
 
     private int strike;
@@ -19,11 +21,11 @@ public class GameState {
         return strike != 3;
     }
 
-    public void print() {
+    public void print(OutputView outputView) {
         if (strike == 0 && ball == 0) {
-            System.out.println("낫싱");
+            outputView.printNothing();
         } else {
-            System.out.println(ball + "볼 " + strike + "스트라이크");
+            outputView.printVerdict(ball, strike);
         }
     }
 

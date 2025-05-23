@@ -6,6 +6,9 @@ public class OutputViewImpl implements OutputView {
     private static final String WRITE_USER_MESSAGE = "숫자를 입력해주세요 : ";
     private static final String END_GAME_MESSAGE = "3개의 숫자를 모두 맞히셨습니다! 게임 종료";
     private static final String RE_GAME_MESSAGE = "게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.";
+    private static final String NOTHING_MESSAGE = "낫싱";
+    private static final String BALL = "볼 ";
+    private static final String STRIKE = "스트라이크";
 
     @Override
     public void startMessage() {
@@ -25,5 +28,15 @@ public class OutputViewImpl implements OutputView {
     @Override
     public void reStartMessage() {
         System.out.println(RE_GAME_MESSAGE);
+    }
+
+    @Override
+    public void printNothing() {
+        System.out.println(NOTHING_MESSAGE);
+    }
+
+    @Override
+    public void printVerdict(int ball, int strike) {
+        System.out.println(ball + BALL + strike + STRIKE);
     }
 }

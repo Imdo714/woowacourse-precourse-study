@@ -33,7 +33,7 @@ public class GameController {
 
         while (compare){
             saveUserNumber();  // 사용자 입력을 받아 userNumber에 저장
-            compare = gameService.compareNumber(); // 숫자 비교 해서 삼진인지 확인
+            compare = gameService.compareNumber(outputView); // 숫자 비교 해서 삼진인지 확인
         }
     }
 
