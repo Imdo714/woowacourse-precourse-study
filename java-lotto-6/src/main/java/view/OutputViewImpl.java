@@ -1,8 +1,11 @@
 package view;
 
 import model.Lotto;
+import model.LottoList;
+import model.Rank;
 
 import java.util.List;
+import java.util.Map;
 
 public class OutputViewImpl implements OutputView {
 
@@ -27,10 +30,8 @@ public class OutputViewImpl implements OutputView {
     }
 
     @Override
-    public void printLottoNumbers(List<Lotto> lottoList) {
-        for (Lotto lotto : lottoList) {
-            System.out.println(lotto.getNumbers());
-        }
+    public void printLottoNumbers(Lotto lotto) {
+        System.out.println(lotto);
         nextLinBlank();
     }
 
@@ -47,6 +48,22 @@ public class OutputViewImpl implements OutputView {
     @Override
     public void printBonusNumber() {
         System.out.println(PRINT_BONUS_MESSAGE);
+    }
+
+    @Override
+    public void printProfitRate(double rate) {
+        System.out.printf("총 수익률은 %.1f%%입니다.\n", rate);
+    }
+
+    @Override
+    public void printStatistics(String message, int reward, int count) {
+        System.out.printf("%s (%,d원) - %d개\n", message, reward, count);
+    }
+
+    @Override
+    public void printStatisticsMessage() {
+        System.out.println("당첨 통계");
+        System.out.println("---");
     }
 
 }

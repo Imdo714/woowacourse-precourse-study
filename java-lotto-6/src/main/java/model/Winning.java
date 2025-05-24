@@ -23,6 +23,7 @@ public class Winning {
     public void validBonus(String writeNumber) {
         this.bonus = parseInt(writeNumber); // 숫자 타입인지
         rangeOneAndFortyFive(bonus); // 1부터 45까지인지
+        bonusDuplication(bonus); // 당첨 번호랑 중복있는지
     }
 
     private List<Integer> validSplit(String getWinning) {
@@ -70,9 +71,21 @@ public class Winning {
 
     private void isSetListSizeCheck(Set<Integer> setList) {
         if(setList.size() < 6){
-            throw new IllegalArgumentException(IS_DUPLICATION.getText());
+            throw new IllegalArgumentException(IS_DUPLICATION_LOTTO.getText());
         }
     }
 
+    public void bonusDuplication(int number) {
+        if(winningContains(number)){
+            throw new IllegalArgumentException(IS_DUPLICATION_BONUS.getText());
+        }
+    }
 
+    public boolean winningContains(int number) {
+        return winnings.contains(number);
+    }
+
+    public int getBonus() {
+        return bonus;
+    }
 }

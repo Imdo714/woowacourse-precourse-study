@@ -1,13 +1,15 @@
 package controller;
 
-import model.Lotto;
+import model.LottoList;
 import model.Price;
+import model.Rank;
 import model.Winning;
 import utlis.RandomNumber;
 import view.InputView;
 import view.OutputView;
 
 import java.util.List;
+import java.util.Map;
 
 public class lottoController {
 
@@ -25,11 +27,15 @@ public class lottoController {
     public void start(){
         getPriceAndValid(); // 금액 및 로또 갯수 계산
 
-        getLottoSaved(); // 금액에 맞게 로또 번호 6개 뽑아서 Lotte 도메인에 저장
+        LottoList lottoSaved = getLottoSaved();// 금액에 맞게 로또 번호 6개 뽑아서 Lotte 도메인에 저장
 
         getWinningLotto(); // 당첨 번호 입력 받아 검증
 
         getBonusNumber(); // 보너스 번호 입력 받아 검증
+
+        Map<Rank, Integer> resultStats = getRankEnumMap(lottoSaved); // 당첨 번호 비교해서 통계 보여 줌
+
+        getProfitRate(lottoSaved, resultStats); // 총 수익률 계산
     }
 
     private void getPriceAndValid() {
@@ -52,9 +58,10 @@ public class lottoController {
         return getPrice;
     }
 
-    private void getLottoSaved() {
-        List<Lotto> lottoList = randomNumber.generation(price.getCount());
-        outputView.printLottoNumbers(lottoList);  // 로또 번호 출력
+    private LottoList getLottoSaved() {
+        LottoList lottoList = randomNumber.generation(price.getCount()); // 구매한 로또 LottoList에 저장
+        lottoList.printLottoNumbers(outputView);
+        return lottoList;
     }
 
     private void getWinningLotto() {
@@ -77,8 +84,36 @@ public class lottoController {
     }
 
     private void getBonusNumber() {
-        outputView.printBonusNumber();
-        String writeNumber = inputView.getWriteNumber();
-        winning.validBonus(writeNumber); // 보너스 볼 범위 숫자만 입력 하게 만듬
+        while (true){
+            try{
+                outputView.printBonusNumber();
+                String writeNumber = inputView.getWriteNumber();
+                winning.validBonus(writeNumber); // 보너스 볼 범위 숫자만 입력 하게 만듬
+                break;
+            } catch (IllegalArgumentException e){
+                outputView.isExceptionMessage(e.getMessage());
+            }
+        }
     }
+
+    private Map<Rank, Integer> getRankEnumMap(LottoList lottoSaved) {
+        List<Rank> results = lottoSaved.matchAll(winning); // LottoList에 들어있는 구매한 로또 번호와들과 Winning에 들어있는 당첨 번호 비교
+
+        Map<Rank, Integer> resultStats = lottoSaved.summarize(results); // EnumMap에 랭크 수량 계산 없으면 0 있으면 1씩 증가
+
+        printDuplicationLottoStats(lottoSaved, resultStats);
+        return resultStats;
+    }
+
+    private void printDuplicationLottoStats(LottoList lottoSaved, Map<Rank, Integer> resultStats) {
+        outputView.printStatisticsMessage();
+        lottoSaved.printStats(resultStats, outputView);
+    }
+
+    private void getProfitRate(LottoList lottoSaved, Map<Rank, Integer> resultStats) {
+        int totalReward = lottoSaved.calculateTotalReward(resultStats); // 총 수익
+        double rate = price.profitRate(totalReward);
+        outputView.printProfitRate(rate);
+    }
+
 }

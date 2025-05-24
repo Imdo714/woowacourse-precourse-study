@@ -1,6 +1,8 @@
 package utlis;
 
 import model.Lotto;
+import model.LottoList;
+import view.OutputView;
 
 import java.util.*;
 
@@ -8,7 +10,13 @@ public class RandomNumber {
 
     Random random = new Random();
 
-    public List<Lotto> generation(int count){
+    public LottoList generation(int count){
+        List<Lotto> lottos = getLottos(count);
+
+        return new LottoList(lottos);
+    }
+
+    private List<Lotto> getLottos(int count) {
         List<Lotto> lottos = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {
