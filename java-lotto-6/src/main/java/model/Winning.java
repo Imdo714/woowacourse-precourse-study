@@ -10,6 +10,10 @@ import static view.ErrorMessage.*;
 
 public class Winning {
 
+    private static final int LOTTO_MIN_NUMBER = 1;
+    private static final int LOTTO_MAX_NUMBER = 45;
+    private static final int LOTTO_NUMBER_SIZE = 6;
+
     private List<Integer> winnings;
     private int bonus;
 
@@ -48,13 +52,13 @@ public class Winning {
     }
 
     private void rangeOneAndFortyFive(int number) {
-        if (number < 1 || number > 45) {
+        if (number < LOTTO_MIN_NUMBER  || number > LOTTO_MAX_NUMBER ) {
             throw new IllegalArgumentException(IS_NOT_WINNING_RANGE.getText());
         }
     }
 
     private void validateSize(List<Integer> numbers)  {
-        if (numbers.size() != 6) {
+        if (numbers.size() != LOTTO_NUMBER_SIZE) {
             throw new IllegalArgumentException(IS_LENGTH_ERROR.getText());
         }
     }
@@ -70,7 +74,7 @@ public class Winning {
     }
 
     private void isSetListSizeCheck(Set<Integer> setList) {
-        if(setList.size() < 6){
+        if(setList.size() < LOTTO_NUMBER_SIZE){
             throw new IllegalArgumentException(IS_DUPLICATION_LOTTO.getText());
         }
     }

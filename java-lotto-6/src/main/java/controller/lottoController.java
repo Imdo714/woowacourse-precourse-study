@@ -15,13 +15,16 @@ public class lottoController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    Price price = new Price();
-    RandomNumber randomNumber = new RandomNumber();
-    Winning winning = new Winning();
+    private final Price price;
+    private final RandomNumber randomNumber;
+    private final Winning winning;
 
-    public lottoController(InputView inputView, OutputView outputView) {
+    public lottoController(InputView inputView, OutputView outputView, Price price, RandomNumber randomNumber, Winning winning) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.price = price;
+        this.randomNumber = randomNumber;
+        this.winning = winning;
     }
 
     public void start(){

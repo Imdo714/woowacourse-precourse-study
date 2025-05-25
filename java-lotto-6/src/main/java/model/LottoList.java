@@ -67,20 +67,23 @@ public class LottoList {
         int total = 0;
 
         for (Rank rank : Rank.values()) { // Rank.values()는 Rank enum의 모든 등수 순회
-            if (rank == MISS) continue;
+            if (isaRankMiss(rank)) continue;
             total += stats.getOrDefault(rank, 0) * rank.getReward(); // rank 가 없으면 (0 * Reward) 있으면 (수량 * Reward)
         }
         return total;
     }
 
-
     public void printStats(Map<Rank, Integer> resultStats, OutputView outputView) {
         for (Rank rank : Rank.values()) {
-            if (rank == Rank.MISS) continue;
+            if (isaRankMiss(rank)) continue;
 
             int count = resultStats.getOrDefault(rank, 0); // 랭크 수량 즉, 당첨 갯수
             outputView.printStatistics(rank.getMessage(), rank.getReward(), count);
         }
+    }
+
+    private static boolean isaRankMiss(Rank rank) {
+        return rank == MISS;
     }
 
     public void printLottoNumbers(OutputView outputView) {
